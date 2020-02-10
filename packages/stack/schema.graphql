@@ -1,0 +1,26 @@
+schema {
+  query: Query
+}
+
+type Query {
+  getVideo(id: Int!): Video
+  getVideos(limit: Int, nextToken: String): VideosConnection
+}
+
+type VideosConnection {
+  videos: [Video]
+  nextToken: String
+}
+
+type Video {
+  id: ID!
+  name: String
+  description: String
+  vote: Int
+  status: VideoStatus
+}
+
+enum VideoStatus {
+  complete
+  processing
+}

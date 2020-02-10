@@ -1,0 +1,35 @@
+type Mutation @aws_api_key
+@aws_cognito_user_pools {
+	saveVote(id: String!): Video
+}
+
+type Query @aws_api_key
+@aws_cognito_user_pools {
+	getServiceVersion: ServiceVersion
+	getVideos: [Video]
+	getVideo(id: String): Video
+}
+
+input SaveVoteInput {
+	id: String!
+}
+
+type ServiceVersion {
+	version: String!
+}
+
+type Subscription {
+	onSaveVote: Video
+		@aws_subscribe(mutations: ["saveVote"])
+}
+
+type Video @aws_api_key
+@aws_cognito_user_pools {
+	id: String!
+	title: String!
+	votes: Int!
+	description: String
+	hlsUrl: String
+	dashUrl: String
+	thumbnailUrl: String
+}

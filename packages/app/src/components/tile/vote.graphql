@@ -1,0 +1,5 @@
+mutation PutVote($video: String!) {
+  saveVote(id: $video) {
+    votes
+  }
+}

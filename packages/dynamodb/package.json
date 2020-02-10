@@ -1,0 +1,30 @@
+{
+    "name": "dynamopdb",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w",
+        "clean": "rm -rf node_modules/",
+        "test": "jest",
+        "cdk": "cdk"
+    },
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.46",
+        "@types/jest": "^24.0.22",
+        "@types/node": "^12.0.0",
+        "jest": "^24.9.0",
+        "ts-jest": "^24.1.0",
+        "ts-node": "^8.1.0",
+        "typescript": "~3.7.2"
+    },
+    "workspaces": {
+        "nohoist": [
+            "@types/**"
+        ]
+    },
+    "dependencies": {
+        "@aws/dynamodb-data-mapper": "^0.7.3",
+        "@aws/dynamodb-data-mapper-annotations": "^0.7.3"
+    }
+}

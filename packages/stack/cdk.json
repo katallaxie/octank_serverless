@@ -1,0 +1,7 @@
+{
+  "app": "npx ts-node bin/core.ts",
+  "context": {
+    "projectName": "master-builder",
+    "operatorEmail": "sebastian@pixelmilk.com"
+  }
+}

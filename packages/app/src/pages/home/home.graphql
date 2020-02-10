@@ -1,0 +1,10 @@
+query Home {
+  getVideos {
+    id
+    title
+    description
+    hlsUrl
+    thumbnailUrl
+    votes
+  }
+}

@@ -2,8 +2,10 @@
   "packages": [
     "packages/*"
   ],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
+  "nohoist": [
+    "@types/node"
+  ],
   "rejectCycles": "true",
+  "parallel": true,
   "version": "0.0.0"
 }

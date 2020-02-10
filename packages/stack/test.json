@@ -1,0 +1,23 @@
+{
+  "TableName": "touchdown-videos",
+  "KeyConditions": {
+    "Id": {
+      "ComparisonOperator": "NOT_NULL"
+    },
+    "category": {
+      "ComparisonOperator": "EQ",
+      "AttributeValueList": [
+        {
+          "S": "highlights"
+        }
+      ]
+    }
+  },
+  "FilterExpression": "isPublished = :isPublished",
+  "ExpressionAttributeValues": {
+    ":isPublished": {
+      "BOOL": true
+    }
+  },
+  "Limit": 10
+}
