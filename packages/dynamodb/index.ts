@@ -36,13 +36,13 @@ export class Video {
   votes: Number = 0
 
   @attribute()
-  hlsUrl: String
+  hlsUrl: String | null
 
   @attribute()
-  dashUrl: String
+  dashUrl: String | null
 
   @attribute()
-  thumbnailUrl: String
+  thumbnailUrl: String | null
 }
 
 export interface UserMetadata {
@@ -107,15 +107,18 @@ export async function main(data: Data) {
       client: dynamodb // the SDK client used to execute operations
     })
 
-    const toSave = Object.assign(new Video(), {
-      id: data?.userMetadata.uuid,
-      status: data.status,
-      hlsUrl: cloudFrontUrl(filterHlsUrl(data?.outputGroupDetails)),
-      thumbnailUrl: cloudFrontUrl(filterThumbnailUrl(data?.outputGroupDetails)),
-      published: false
-    })
+    const video = new Video()
+    video.id = data?.userMetadata.uuid
+    video.status = data?.status
 
-    await mapper.put(toSave)
+    if (data.status === 'COMPLETE') {
+      video.hlsUrl = cloudFrontUrl(filterHlsUrl(data?.outputGroupDetails))
+      video.thumbnailUrl = cloudFrontUrl(
+        filterThumbnailUrl(data?.outputGroupDetails)
+      )
+    }
+
+    await mapper.put(video)
   } catch (e) {
     throw e
   }
