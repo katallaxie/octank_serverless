@@ -6,7 +6,7 @@ type Mutation @aws_api_key
 type Query @aws_api_key
 @aws_cognito_user_pools {
 	getServiceVersion: ServiceVersion
-	getVideos: [Video]
+	getVideos(limit: Int, nextToken: String): Videos
 	getVideo(id: String): Video
 }
 
@@ -32,4 +32,10 @@ type Video @aws_api_key
 	hlsUrl: String
 	dashUrl: String
 	thumbnailUrl: String
+}
+
+type Videos @aws_api_key
+@aws_cognito_user_pools {
+	videos: [Video]
+	nextToken: String
 }

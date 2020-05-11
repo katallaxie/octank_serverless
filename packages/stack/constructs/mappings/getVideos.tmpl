@@ -7,8 +7,8 @@
       ":published": {"BOOL": true}
     }
   }
-  #if( ${context.arguments.count} )
-      ,"limit": $util.toJson($context.arguments.count)
+  #if( ${context.arguments.limit} )
+      ,"limit": $util.toJson($context.arguments.limit)
   #end
   #if( ${context.arguments.nextToken} )
       ,"nextToken": $util.toJson($context.arguments.nextToken)

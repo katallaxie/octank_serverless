@@ -1,119 +1,166 @@
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
-import * as React from 'react';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
-import * as ApolloReactHooks from '@apollo/react-hooks';
-export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import gql from 'graphql-tag'
+import * as ApolloReactCommon from '@apollo/react-common'
+import * as React from 'react'
+import * as ApolloReactComponents from '@apollo/react-components'
+import * as ApolloReactHoc from '@apollo/react-hoc'
+import * as ApolloReactHooks from '@apollo/react-hooks'
+export type Maybe<T> = T | null
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-};
+  ID: string
+  String: string
+  Boolean: boolean
+  Int: number
+  Float: number
+}
 
 export type Mutation = {
-   __typename?: 'Mutation';
-  saveVote?: Maybe<Video>;
-};
-
+  __typename?: 'Mutation'
+  saveVote?: Maybe<Video>
+}
 
 export type MutationSaveVoteArgs = {
-  id: Scalars['String'];
-};
+  id: Scalars['String']
+}
 
 export type Query = {
-   __typename?: 'Query';
-  getServiceVersion?: Maybe<ServiceVersion>;
-  getVideos?: Maybe<Array<Maybe<Video>>>;
-  getVideo?: Maybe<Video>;
-};
+  __typename?: 'Query'
+  getServiceVersion?: Maybe<ServiceVersion>
+  getVideos?: Maybe<Videos>
+  getVideo?: Maybe<Video>
+}
 
+export type QueryGetVideosArgs = {
+  limit?: Maybe<Scalars['Int']>
+  nextToken?: Maybe<Scalars['String']>
+}
 
 export type QueryGetVideoArgs = {
-  id?: Maybe<Scalars['String']>;
-};
+  id?: Maybe<Scalars['String']>
+}
 
 export type SaveVoteInput = {
-  id: Scalars['String'];
-};
+  id: Scalars['String']
+}
 
 export type ServiceVersion = {
-   __typename?: 'ServiceVersion';
-  version: Scalars['String'];
-};
+  __typename?: 'ServiceVersion'
+  version: Scalars['String']
+}
 
 export type Subscription = {
-   __typename?: 'Subscription';
-  onSaveVote?: Maybe<Video>;
-};
+  __typename?: 'Subscription'
+  onSaveVote?: Maybe<Video>
+}
 
 export type Video = {
-   __typename?: 'Video';
-  id: Scalars['String'];
-  title: Scalars['String'];
-  votes: Scalars['Int'];
-  description?: Maybe<Scalars['String']>;
-  hlsUrl?: Maybe<Scalars['String']>;
-  dashUrl?: Maybe<Scalars['String']>;
-  thumbnailUrl?: Maybe<Scalars['String']>;
-};
+  __typename?: 'Video'
+  id: Scalars['String']
+  title: Scalars['String']
+  votes: Scalars['Int']
+  description?: Maybe<Scalars['String']>
+  hlsUrl?: Maybe<Scalars['String']>
+  dashUrl?: Maybe<Scalars['String']>
+  thumbnailUrl?: Maybe<Scalars['String']>
+}
+
+export type Videos = {
+  __typename?: 'Videos'
+  videos?: Maybe<Array<Maybe<Video>>>
+  nextToken?: Maybe<Scalars['String']>
+}
 
 export type PutVoteMutationVariables = {
-  video: Scalars['String'];
-};
+  video: Scalars['String']
+}
 
+export type PutVoteMutation = { __typename?: 'Mutation' } & {
+  saveVote?: Maybe<{ __typename?: 'Video' } & Pick<Video, 'votes'>>
+}
 
-export type PutVoteMutation = (
-  { __typename?: 'Mutation' }
-  & { saveVote?: Maybe<(
-    { __typename?: 'Video' }
-    & Pick<Video, 'votes'>
-  )> }
-);
+export type HomeQueryVariables = {}
 
-export type HomeQueryVariables = {};
-
-
-export type HomeQuery = (
-  { __typename?: 'Query' }
-  & { getVideos?: Maybe<Array<Maybe<(
-    { __typename?: 'Video' }
-    & Pick<Video, 'id' | 'title' | 'description' | 'hlsUrl' | 'thumbnailUrl' | 'votes'>
-  )>>> }
-);
-
+export type HomeQuery = { __typename?: 'Query' } & {
+  getVideos?: Maybe<
+    { __typename?: 'Videos' } & Pick<Videos, 'nextToken'> & {
+        videos?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'Video' } & Pick<
+                Video,
+                | 'id'
+                | 'title'
+                | 'description'
+                | 'hlsUrl'
+                | 'thumbnailUrl'
+                | 'votes'
+              >
+            >
+          >
+        >
+      }
+  >
+}
 
 export const PutVoteDocument = gql`
-    mutation PutVote($video: String!) {
-  saveVote(id: $video) {
-    votes
+  mutation PutVote($video: String!) {
+    saveVote(id: $video) {
+      votes
+    }
   }
-}
-    `;
-export type PutVoteMutationFn = ApolloReactCommon.MutationFunction<PutVoteMutation, PutVoteMutationVariables>;
-export type PutVoteComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<PutVoteMutation, PutVoteMutationVariables>, 'mutation'>;
-
-    export const PutVoteComponent = (props: PutVoteComponentProps) => (
-      <ApolloReactComponents.Mutation<PutVoteMutation, PutVoteMutationVariables> mutation={PutVoteDocument} {...props} />
-    );
-    
-export type PutVoteProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<PutVoteMutation, PutVoteMutationVariables>
-    } & TChildProps;
-export function withPutVote<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
+`
+export type PutVoteMutationFn = ApolloReactCommon.MutationFunction<
   PutVoteMutation,
-  PutVoteMutationVariables,
-  PutVoteProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, PutVoteMutation, PutVoteMutationVariables, PutVoteProps<TChildProps, TDataName>>(PutVoteDocument, {
-      alias: 'putVote',
-      ...operationOptions
-    });
-};
+  PutVoteMutationVariables
+>
+export type PutVoteComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    PutVoteMutation,
+    PutVoteMutationVariables
+  >,
+  'mutation'
+>
+
+export const PutVoteComponent = (props: PutVoteComponentProps) => (
+  <ApolloReactComponents.Mutation<PutVoteMutation, PutVoteMutationVariables>
+    mutation={PutVoteDocument}
+    {...props}
+  />
+)
+
+export type PutVoteProps<
+  TChildProps = {},
+  TDataName extends string = 'mutate'
+> = {
+  [key in TDataName]: ApolloReactCommon.MutationFunction<
+    PutVoteMutation,
+    PutVoteMutationVariables
+  >
+} &
+  TChildProps
+export function withPutVote<
+  TProps,
+  TChildProps = {},
+  TDataName extends string = 'mutate'
+>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    PutVoteMutation,
+    PutVoteMutationVariables,
+    PutVoteProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    PutVoteMutation,
+    PutVoteMutationVariables,
+    PutVoteProps<TChildProps, TDataName>
+  >(PutVoteDocument, {
+    alias: 'putVote',
+    ...operationOptions
+  })
+}
 
 /**
  * __usePutVoteMutation__
@@ -132,43 +179,78 @@ export function withPutVote<TProps, TChildProps = {}, TDataName extends string =
  *   },
  * });
  */
-export function usePutVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PutVoteMutation, PutVoteMutationVariables>) {
-        return ApolloReactHooks.useMutation<PutVoteMutation, PutVoteMutationVariables>(PutVoteDocument, baseOptions);
-      }
-export type PutVoteMutationHookResult = ReturnType<typeof usePutVoteMutation>;
-export type PutVoteMutationResult = ApolloReactCommon.MutationResult<PutVoteMutation>;
-export type PutVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<PutVoteMutation, PutVoteMutationVariables>;
-export const HomeDocument = gql`
-    query Home {
-  getVideos {
-    id
-    title
-    description
-    hlsUrl
-    thumbnailUrl
-    votes
-  }
+export function usePutVoteMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    PutVoteMutation,
+    PutVoteMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    PutVoteMutation,
+    PutVoteMutationVariables
+  >(PutVoteDocument, baseOptions)
 }
-    `;
-export type HomeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<HomeQuery, HomeQueryVariables>, 'query'>;
+export type PutVoteMutationHookResult = ReturnType<typeof usePutVoteMutation>
+export type PutVoteMutationResult = ApolloReactCommon.MutationResult<
+  PutVoteMutation
+>
+export type PutVoteMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  PutVoteMutation,
+  PutVoteMutationVariables
+>
+export const HomeDocument = gql`
+  query Home {
+    getVideos {
+      videos {
+        id
+        title
+        description
+        hlsUrl
+        thumbnailUrl
+        votes
+      }
+      nextToken
+    }
+  }
+`
+export type HomeComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<HomeQuery, HomeQueryVariables>,
+  'query'
+>
 
-    export const HomeComponent = (props: HomeComponentProps) => (
-      <ApolloReactComponents.Query<HomeQuery, HomeQueryVariables> query={HomeDocument} {...props} />
-    );
-    
+export const HomeComponent = (props: HomeComponentProps) => (
+  <ApolloReactComponents.Query<HomeQuery, HomeQueryVariables>
+    query={HomeDocument}
+    {...props}
+  />
+)
+
 export type HomeProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<HomeQuery, HomeQueryVariables>
-    } & TChildProps;
-export function withHome<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  [key in TDataName]: ApolloReactHoc.DataValue<HomeQuery, HomeQueryVariables>
+} &
+  TChildProps
+export function withHome<
   TProps,
-  HomeQuery,
-  HomeQueryVariables,
-  HomeProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, HomeQuery, HomeQueryVariables, HomeProps<TChildProps, TDataName>>(HomeDocument, {
-      alias: 'home',
-      ...operationOptions
-    });
-};
+  TChildProps = {},
+  TDataName extends string = 'data'
+>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    HomeQuery,
+    HomeQueryVariables,
+    HomeProps<TChildProps, TDataName>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    HomeQuery,
+    HomeQueryVariables,
+    HomeProps<TChildProps, TDataName>
+  >(HomeDocument, {
+    alias: 'home',
+    ...operationOptions
+  })
+}
 
 /**
  * __useHomeQuery__
@@ -185,12 +267,28 @@ export function withHome<TProps, TChildProps = {}, TDataName extends string = 'd
  *   },
  * });
  */
-export function useHomeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<HomeQuery, HomeQueryVariables>) {
-        return ApolloReactHooks.useQuery<HomeQuery, HomeQueryVariables>(HomeDocument, baseOptions);
-      }
-export function useHomeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<HomeQuery, HomeQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<HomeQuery, HomeQueryVariables>(HomeDocument, baseOptions);
-        }
-export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
-export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
-export type HomeQueryResult = ApolloReactCommon.QueryResult<HomeQuery, HomeQueryVariables>;
+export function useHomeQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<HomeQuery, HomeQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<HomeQuery, HomeQueryVariables>(
+    HomeDocument,
+    baseOptions
+  )
+}
+export function useHomeLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    HomeQuery,
+    HomeQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<HomeQuery, HomeQueryVariables>(
+    HomeDocument,
+    baseOptions
+  )
+}
+export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>
+export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>
+export type HomeQueryResult = ApolloReactCommon.QueryResult<
+  HomeQuery,
+  HomeQueryVariables
+>

@@ -1,16 +1,27 @@
 import React from 'react'
 import { Pane } from 'evergreen-ui'
-import { HomeQuery } from '../../generated/graphql'
+import { Maybe, Video } from '../../generated/graphql'
 import Tile from '../tile'
 
 type TilesProps = {
-  data: HomeQuery | undefined
+  videos:
+    | Maybe<
+        {
+          __typename?: 'Video' | undefined
+        } & Pick<
+          Video,
+          'id' | 'title' | 'description' | 'hlsUrl' | 'thumbnailUrl' | 'votes'
+        >
+      >[]
+    | null
+    | undefined
 }
 
-export function Tiles({ data }: TilesProps) {
+export function Tiles({ videos }: TilesProps) {
+  console.log(videos)
   return (
     <Pane>
-      {data?.getVideos?.map(video =>
+      {videos?.map(video =>
         video ? <Tile key={video.id} video={video} /> : null
       )}
     </Pane>

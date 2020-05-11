@@ -1,10 +1,13 @@
 query Home {
   getVideos {
-    id
-    title
-    description
-    hlsUrl
-    thumbnailUrl
-    votes
+    videos {
+      id
+      title
+      description
+      hlsUrl
+      thumbnailUrl
+      votes
+    }
+    nextToken
   }
 }

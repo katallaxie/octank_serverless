@@ -5,6 +5,7 @@ import { Spinner, Heading, Pane, toaster } from 'evergreen-ui'
 
 export function Home() {
   const { loading, error, data } = useHomeQuery()
+  const videos = data?.getVideos?.videos
 
   const showError = () => {
     toaster.danger('Argh, could not fetch new videos')
@@ -39,7 +40,7 @@ export function Home() {
     )
   }
 
-  if (!data?.getVideos?.length) {
+  if (!videos?.length) {
     return (
       <Pane
         display="flex"
@@ -53,7 +54,7 @@ export function Home() {
     )
   }
 
-  return <Tiles data={data} />
+  return <Tiles videos={videos} />
 }
 
 export default Home

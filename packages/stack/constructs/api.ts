@@ -78,7 +78,9 @@ export class Api extends cdk.Construct {
       requestMappingTemplate: appsync.MappingTemplate.fromFile(
         path.join(__dirname, './mappings/getVideos.tmpl')
       ),
-      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultList()
+      responseMappingTemplate: appsync.MappingTemplate.fromFile(
+        path.join(__dirname, './mappings/videos.tmpl')
+      )
     })
     this.videoDS.createResolver({
       typeName: 'Query',
